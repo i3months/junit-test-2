@@ -8,9 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest(classes = MvcTestingExampleApplication.class) // 경로 안 맞춰주면 지정해 줘야 함. 경로 맞춰주면 알아서 지정됨.
 public class ApplicationExampleTest {
@@ -35,6 +38,9 @@ public class ApplicationExampleTest {
     @Autowired
     StudentGrades studentGrades;
 
+    @Autowired
+    ApplicationContext context;
+
     @BeforeEach
     public void beforeEach() {
         count++;
@@ -50,6 +56,20 @@ public class ApplicationExampleTest {
     @DisplayName("Add grade")
     @Test
     public void addGradeResultsForStudentGrades() {
+        // write..
+    }
+
+    @DisplayName("Add grade results for not equals")
+    @Test
+    public void gradeNotEquals() {
+        assertNotEquals(0, studentGrades.addGradeResultsForSingleClass(student.getStudentGrades().getMathGradeResults()));
+    }
+
+    @DisplayName("init from DI")
+    @Test
+    public void testDI() {
+        CollegeStudent student2 = context.getBean("collegeStudent", CollegeStudent.class);
+
     }
 
     @Test
